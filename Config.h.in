@@ -1,0 +1,2 @@
+#define VERSION_MAJOR	@MathToolSet_VERSION_MAJOR@
+#define VERSION_MINOR	@MathToolSet_VERSION_MINOR@
