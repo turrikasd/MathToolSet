@@ -11,3 +11,13 @@
 *.lai
 *.la
 *.a
+
+# Folders
+x64
+ipch
+Debug
+Release
+
+# Settings
+*.suo
+*.sdf
