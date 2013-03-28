@@ -4,7 +4,7 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-	char* input;
+	char input[128];
 	char* output;
 
 	cout << "Usage: [A]|[C] <COMMAND> [PARAM1] [PARAM2]..." << endl;
@@ -19,6 +19,8 @@ int main(int argc, char* argv[])
 
 	cout << output << endl;
 
+	HoldExec();
+
 	return 0;
 }
 
@@ -30,4 +32,10 @@ char* AsmInput(char* input)
 char* CppInput(char* input)
 {
 	return "ERROR: Not Implemented!";
+}
+
+void HoldExec()
+{
+	char c;
+	cin >> c;
 }
