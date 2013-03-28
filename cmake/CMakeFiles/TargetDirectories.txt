@@ -1,5 +1,0 @@
-D:/Documents/GitHub/CMakeTest/cmake/CMakeFiles/ALL_BUILD.dir
-D:/Documents/GitHub/CMakeTest/cmake/src/ASMMath/CMakeFiles/ASMMath.dir
-D:/Documents/GitHub/CMakeTest/cmake/src/CPPMath/CMakeFiles/CPPMath.dir
-D:/Documents/GitHub/CMakeTest/cmake/src/MathTool/CMakeFiles/MathTool.dir
-D:/Documents/GitHub/CMakeTest/cmake/CMakeFiles/ZERO_CHECK.dir
