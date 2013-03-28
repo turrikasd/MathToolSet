@@ -1,5 +1,6 @@
 cmake_minimum_required (VERSION 2.6)
 project (MathToolSet)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
 # Set the current version number to be defined in the config header
 set (MathToolSet_VERSION_MAJOR 1)
