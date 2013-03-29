@@ -11,4 +11,3 @@
 #include <iostream>
 
 extern void ASMMath_EI AsmProblemOne();
-extern void PrintOut(int num);
