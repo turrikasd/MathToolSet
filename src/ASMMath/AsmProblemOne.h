@@ -7,3 +7,4 @@
 #include <iostream>
 
 void ASMMath_EI AsmProblemOne();
+void PrintOut(int num);
