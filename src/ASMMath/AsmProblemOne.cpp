@@ -16,7 +16,7 @@ loop_start:
 		push edx;
 
 		mov ecx, 3;
-		idiv ecx;
+		div ecx;
 		cmp edx, 0;
 
 		pop ecx;

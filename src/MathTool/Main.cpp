@@ -28,10 +28,17 @@ int main(int argc, char* argv[])
 			continue;
 		}
 
+		// Space
+		cout << endl;
+
 		switch (input[0])
 		{
 		case '1':
 			RunTest(1);
+			break;
+
+		case '2':
+			RunTest(2);
 			break;
 
 		default:
