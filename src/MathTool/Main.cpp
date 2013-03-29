@@ -8,7 +8,7 @@ int main(int argc, char* argv[])
 
 	cout << "Choose the math routine to test" << endl;
 	cout << "Enter the # of the routine" << endl;
-	cout << "Type HELP for more information" << endl;
+	cout << "Type HELP for more info, EXIT to quit" << endl;
 
 	while (!exit)
 	{
@@ -53,7 +53,7 @@ int main(int argc, char* argv[])
 void PrintHelpMessage()
 {
 	cout << endl << endl;
-	cout << "This program servers as answer to Project Euler" << endl;
+	cout << "This program is an answer to Project Euler" << endl;
 	cout << "The Problems this program demonstrates can be found at:" << endl;
 	cout << "http://projecteuler.net/problems" << endl;
 }
