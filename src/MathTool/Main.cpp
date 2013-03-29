@@ -4,34 +4,51 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-	char input[128];
-	char* output;
+	bool exit = false;
 
-	cout << "Usage: [A]|[C] <COMMAND> [PARAM1] [PARAM2]..." << endl;
-	cout << "If no library is defined, ASM is assumed" << endl;
+	cout << "Choose the math routine to test" << endl;
+	cout << "Enter the # of the routine" << endl;
+	cout << "Type HELP for more information" << endl;
 
-	cin >> input;
+	while (!exit)
+	{
+		char input[128] = "";
+		cin >> input;
 
-	if (input[0] == 'C')
-		output = CppInput(input);
-	else
-		output = AsmInput(input);
+		if (!strcmp(input, "help") | !strcmp(input, "HELP") | !strcmp(input, "Help"))
+		{
+			PrintHelpMessage();
+			continue;
+		}
+		
+		else if (!strcmp(input, "exit") | !strcmp(input, "EXIT") | !strcmp(input, "Exit")
+			)
+		{
+			exit = true;
+			continue;
+		}
 
-	cout << output << endl;
+		switch (input[0])
+		{
+		case '1':
+			RunTest(1);
+			break;
 
-	HoldExec();
+		default:
+			cout << "Invalid input" << endl;
+			continue;
+		}
+	}
 
 	return 0;
 }
 
-char* AsmInput(char* input)
+void PrintHelpMessage()
 {
-	return "ERROR: Not Implemented!";
-}
-
-char* CppInput(char* input)
-{
-	return "ERROR: Not Implemented!";
+	cout << endl << endl;
+	cout << "This program servers as answer to Project Euler" << endl;
+	cout << "The Problems this program demonstrates can be found at:" << endl;
+	cout << "http://projecteuler.net/problems" << endl;
 }
 
 void HoldExec()

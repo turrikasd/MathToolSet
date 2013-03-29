@@ -1,9 +1,9 @@
 #include <iostream>
+#include <string>
 
 #include "Config.h"
-#include "ASMMath.h"
-#include "CPPMath.h"
 
-char* AsmInput(char* input);
-char* CppInput(char* input);
+#include "Problems.h"
+
+void PrintHelpMessage();
 void HoldExec();
