@@ -2,7 +2,7 @@
 
 using namespace std;
 
-#ifdef WIN32
+#ifdef _MSC_VER
 void AsmProblemOne()
 {
 	__asm
@@ -64,9 +64,65 @@ __asm exit_out:
 
 	__asm POP ebx; // Saved in the beginning
 }
-#else
+#elif defined __GNUC__
 void AsmProblemOne()
 {
-	// TODO
+	// Above code ported to AT&T Syntax
+	__asm__("pushl %ebx\n\t" // save ebx
+
+		"pushl $0x3E9\n\t" // push 1001
+		"movl $0x3E7, ‰ecx\n\t" // 999 for the counter
+		"jmp loop_start\n\t"
+
+	"push_to_stack:\n\t"
+
+		"pushl %ecx\n\t"
+		"subl $0x1, %ecx\n\t"
+
+	"loop_start:\n\t"
+
+		// Test if multiple of three
+		"movl $0x3, %ebx\n\t"
+		"movl %ecx, %eax\n\t"
+		"xorl %edx, %edx\n\t"
+		"divl %ebx\n\t"
+		"cmp %edx, $0x0\n\t"
+		"je push_to_stack\n\t"
+
+		// Test if multiple of five
+		"movl $0x5, %ebx\n\t"
+		"movl %ecx, %eax\n\t"
+		"xorl %edx, %edx\n\t"
+		"divl %ebx\n\t"
+		"cmp %edx, $0x0\n\t"
+		"je push_to_stack\n\t"
+
+		"loop loop_start");
+
+	int iPrint;
+	cout << "0 "; // Zero as natural
+
+	__asm__("xorl %eax, %eax"); // zero eax
+
+__asm__("print_all_start:"); // as asm to avoid weird compiler errors
+
+	__asm__("popl %ebx");
+	__asm__("cmp %ebx, $0x3E9"); // 1001 we pushed earlier
+	__asm__("je exit_out"); // Exit once we find 3E7h
+
+	__asm__("adll %ebx, %eax"); // add current to accumulator
+	__asm__("movl %ebx, %iPrint"); // Move ebx for printing
+
+	__asm__("pushl %eax"); // cout will mess up eax so save it
+	cout << iPrint << " ";
+	__asm__("popl %eax");
+
+	__asm__("jmp print_all_start");
+
+__asm__("exit_out:");
+	__asm__("movl %eax, %iPrint"); // Move the answer to iPrint
+	cout << endl << "The answer is: " << iPrint << endl;
+	
+	__asm__("popl %ebx"); // Restore ebx. We saved it in the beginning
 }
 #endif
