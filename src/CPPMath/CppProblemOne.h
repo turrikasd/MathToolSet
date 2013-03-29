@@ -1,4 +1,4 @@
-#if defined (__unix__)
+#if defined (__GNUG__)
 	#define CPPMath_EI __attribute__ ((__visibility__("default")))
 #elif defined (WIN32)
 	#ifdef CPPMath_EXPORTS
