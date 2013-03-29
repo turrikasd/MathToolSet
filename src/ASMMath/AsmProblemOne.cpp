@@ -2,6 +2,7 @@
 
 using namespace std;
 
+#ifdef WIN32
 void AsmProblemOne()
 {
 	__asm
@@ -36,6 +37,12 @@ add_print_number:
 		JMP loop_start;
 	}
 }
+#else
+void AsmProblemOne()
+{
+	// TODO
+}
+#endif
 
 void PrintOut(int num)
 {
