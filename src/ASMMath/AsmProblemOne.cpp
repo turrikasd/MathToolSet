@@ -67,62 +67,56 @@ __asm exit_out:
 #elif defined __GNUC__
 void AsmProblemOne()
 {
-	// Above code ported to AT&T Syntax
-	__asm__("pushl %ebx\n\t" // save ebx
-
-		"pushl $0x3E9\n\t" // push 1001
-		"movl $0x3E7, ‰ecx\n\t" // 999 for the counter
-		"jmp loop_start\n\t"
-
-	"push_to_stack:\n\t"
-
-		"pushl %ecx\n\t"
-		"subl $0x1, %ecx\n\t"
-
-	"loop_start:\n\t"
-
-		// Test if multiple of three
-		"movl $0x3, %ebx\n\t"
-		"movl %ecx, %eax\n\t"
-		"xorl %edx, %edx\n\t"
-		"divl %ebx\n\t"
-		"cmp %edx, $0x0\n\t"
-		"je push_to_stack\n\t"
-
-		// Test if multiple of five
-		"movl $0x5, %ebx\n\t"
-		"movl %ecx, %eax\n\t"
-		"xorl %edx, %edx\n\t"
-		"divl %ebx\n\t"
-		"cmp %edx, $0x0\n\t"
-		"je push_to_stack\n\t"
-
-		"loop loop_start");
-
+	// AT&T Syntax
 	int iPrint;
-	cout << "0 "; // Zero as natural
+	asm("pushq $0x3E9;" // Push 1001, we use this to check when we're done printing
+	    "movl $0x3E7, %ecx;" // Move 999 to ecx - loop counter
+	    "jmp loop_start");
 
-	__asm__("xorl %eax, %eax"); // zero eax
+asm("push_to_stack:;"
+	    "pushq %rcx;"
+	    "subl $0x1, %ecx");
 
-__asm__("print_all_start:"); // as asm to avoid weird compiler errors
+asm("loop_start:;"
+	    "movl $0x3, %ebx;"
+"loop_second:");
 
-	__asm__("popl %ebx");
-	__asm__("cmp %ebx, $0x3E9"); // 1001 we pushed earlier
-	__asm__("je exit_out"); // Exit once we find 3E7h
+	asm("movl %ecx, %eax;" // Move the current number we want to test to eax
+	    "xor %edx, %edx;" // Zero out edx
+	    "div %ebx;" 
+	    "cmp $0x0, %edx;" // Check for remainder. Note the constant has to be specified first
+	    "je push_to_stack"); // Jump if no remainder
 
-	__asm__("adll %ebx, %eax"); // add current to accumulator
-	__asm__("movl %ebx, %iPrint"); // Move ebx for printing
+	asm("cmp $0x5, %ebx;" // Is this second round?
+	    "je loop_end;" // true, deduct and start over
+	    "movl $0x5, %ebx;" // false, do the second round with 5
+	    "jmp loop_second");
 
-	__asm__("pushl %eax"); // cout will mess up eax so save it
-	cout << iPrint << " ";
-	__asm__("popl %eax");
+	asm("loop_end:;"
+	    "loop loop_start");
 
-	__asm__("jmp print_all_start");
+	// Printing code
+	cout << "0 "; // Print zero, we count it as natural
 
-__asm__("exit_out:");
-	__asm__("movl %eax, %iPrint"); // Move the answer to iPrint
-	cout << endl << "The answer is: " << iPrint << endl;
+	asm("xor %eax, %eax;" // Zero out eax, we need it to count the answer
+ "print_loop_start:");	
+
+	asm("popq %%rcx;"
+	    "cmp $0x3E9, %%ecx;" // check if we have reached the end
+	    "je exit_out;" // true, we jump to exit code
+	    "addl %%ecx, %%eax;" // Add the number to answer
+	    "movl %%ecx, %0;" // Move the current number to iPrint
+	    "pushq %%rax;" // cout will mess up eax, so save it
+		:"=m"(iPrint));
 	
-	__asm__("popl %ebx"); // Restore ebx. We saved it in the beginning
+	cout << iPrint << " "; // Print the contents of iPrint, set in ASM
+
+	asm("popq %%rax;" // Restore eax after cout
+	    "jmp print_loop_start;"
+"exit_out:;"
+	    "movl %%eax, %0;"
+		:"=m"(iPrint));
+
+	cout << endl << "The answer is: " << iPrint << endl; // Finally print the answer set to iPrint in ASM
 }
 #endif
