@@ -6,6 +6,27 @@ using namespace std;
 #ifdef _MSC_VER
 void AsmProblemTwo()
 {
+    int sum = 2;
+    int high = 2;
+
+    cout << "2 ";
+
+    __asm   MOV ecx, 01h;
+
+    __asm
+    {
+    loop_start:
+        MOV edx, high;
+        ADD high, ecx;
+        MOV ecx, edx;
+
+        CMP 03D0900h, high;
+        JA exit_out;
+        
+        XOR edx, edx;
+        MOV eax, high;
+        PUSH ecx; 
+    }
 }
 
 #elif defined __GNUC__
